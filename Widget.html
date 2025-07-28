@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body {
+    margin: 0;
+    overflow: hidden; /* Verhindert Scrollbalken */
+    background-color: transparent; /* Macht den Hintergrund transparent */
+  }
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: none; /* Alle Iframes zunächst verstecken */
+  }
+  iframe.active {
+    display: block; /* Aktives Iframe anzeigen */
+  }
+</style>
+</head>
+<body>
+
+<iframe id="widget1" src="https://streamlabs.com/widgets/streamboss?token=C1F0221B78068AEA3949A94160DACAAF8D6D3682EEAF6C5F0D1F073F0801EB64D10B825021C181EE71CAA7DE1C2186A913D888B0E64A05C2D1AEDB34617BCDD31AF072E502F9F2BE087992459BDB7B730369D4E514F2D67B74B6E9B8590323134D65E1AF471DFDBEA4DFBCE2F25E446A99D0B84B0A4BE84D935D439224"></iframe>
+<iframe id="widget2" src="https://streamlabs.com/widgets/viewer-count?token=C1F0221B78068AEA3949A94160DACAAF8D6D3682EEAF6C5F0D1F073F0801EB64D10B825021C181EE71CAA7DE1C2186A913D888B0E64A05C2D1AEDB34617BCDD31AF072E502F9F2BE087992459BDB7B730369D4E514F2D67B74B6E9B8590323134D65E1AF471DFDBEA4DFBCE2F25E446A99D0B84B0A4BE84D935D439224"></iframe>
+<iframe id="widget3" src="https://streamlabs.com/widgets/event-list/v1/C1F0221B78068AEA3949A94160DACAAF8D6D3682EEAF6C5F0D1F073F0801EB64D10B825021C181EE71CAA7DE1C2186A913D888B0E64A05C2D1AEDB34617BCDD31AF072E502F9F2BE087992459BDB7B730369D4E514F2D67B74B6E9B8590323134D65E1AF471DFDBEA4DFBCE2F25E446A99D0B84B0A4BE84D935D439224"></iframe>
+<script>
+  const widgetUrls = [
+    "https://streamlabs.com/widgets/streamboss?token=C1F0221B78068AEA3949A94160DACAAF8D6D3682EEAF6C5F0D1F073F0801EB64D10B825021C181EE71CAA7DE1C2186A913D888B0E64A05C2D1AEDB34617BCDD31AF072E502F9F2BE087992459BDB7B730369D4E514F2D67B74B6E9B8590323134D65E1AF471DFDBEA4DFBCE2F25E446A99D0B84B0A4BE84D935D439224",
+    "https://streamlabs.com/widgets/viewer-count?token=C1F0221B78068AEA3949A94160DACAAF8D6D3682EEAF6C5F0D1F073F0801EB64D10B825021C181EE71CAA7DE1C2186A913D888B0E64A05C2D1AEDB34617BCDD31AF072E502F9F2BE087992459BDB7B730369D4E514F2D67B74B6E9B8590323134D65E1AF471DFDBEA4DFBCE2F25E446A99D0B84B0A4BE84D935D439224",
+    "https://streamlabs.com/widgets/event-list/v1/C1F0221B78068AEA3949A94160DACAAF8D6D3682EEAF6C5F0D1F073F0801EB64D10B825021C181EE71CAA7DE1C2186A913D888B0E64A05C2D1AEDB34617BCDD31AF072E502F9F2BE087992459BDB7B730369D4E514F2D67B74B6E9B8590323134D65E1AF471DFDBEA4DFBCE2F25E446A99D0B84B0A4BE84D935D439224"
+    // Füge hier alle Widget-URLs ein, die du rotieren möchtest
+  ];
+
+  const widgetIframes = [];
+  for (let i = 0; i < widgetUrls.length; i++) {
+    const iframe = document.getElementById(`widget${i + 1}`);
+    if (iframe) {
+      iframe.src = widgetUrls[i]; // Stellt sicher, dass die src gesetzt ist
+      widgetIframes.push(iframe);
+    }
+  }
+
+  let currentIndex = 0;
+  const intervalTime = 10000; // Wechselintervall in Millisekunden (hier 10 Sekunden)
+
+  function showNextWidget() {
+    // Aktuelles Widget ausblenden
+    if (widgetIframes[currentIndex]) {
+      widgetIframes[currentIndex].classList.remove('active');
+    }
+
+    // Nächstes Widget anzeigen
+    currentIndex = (currentIndex + 1) % widgetIframes.length;
+    if (widgetIframes[currentIndex]) {
+      widgetIframes[currentIndex].classList.add('active');
+    }
+  }
+
+  // Beim Laden der Seite das erste Widget anzeigen
+  if (widgetIframes.length > 0) {
+    widgetIframes[0].classList.add('active');
+  }
+
+  // Timer für den Widget-Wechsel starten
+  setInterval(showNextWidget, intervalTime);
+</script>
+
+</body>
+</html>
